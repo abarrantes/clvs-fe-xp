@@ -1,0 +1,42 @@
+*{
+  border-radius: 0px !important;
+}
+
+body {
+  // padding-top: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.main{
+  padding-top: 20px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.login-row{
+  padding-top: 10vh
+}
+
+form{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+form.masters{
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+div {
+  min-width: 200px;
+}
+
+div.user{
+  min-width: 300px;
+}
+
+hr{
+  margin: 5px;
+}

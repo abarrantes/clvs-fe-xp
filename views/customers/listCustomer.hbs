@@ -1,0 +1,33 @@
+
+<h3>
+<a href="/customers/create">CREATE NEW CUSTOMER</a>
+</h3>
+
+<div class="row">
+
+<div class="col-md-3"></div>
+<div class="col-md-2">Code</div>
+<div class="col-md-2">Name</div>
+<div class="col-md-2">Active</div>
+<div class="col-md-3"></div>
+
+</div>
+
+{{#each customers}}
+<hr>
+<div class="row">
+    <hr>
+<div class="col-md-3"></div>
+<div class="col-md-2 cardCode">{{this.cardCode}}</div>
+<div class="col-md-2 cardName">{{this.cardName}}</div>
+<div class="col-md-2">
+    {{#if this.active}}
+    <button class="btn btn-danger btn-sm deactivateCustomer">Deactivate</button>
+    {{else}}
+    <button class="btn btn-success btn-sm activateCustomer">Activate</button>
+    {{/if}}
+</div>
+<div class="col-md-3"></div>
+<hr>
+</div>
+{{/each}}

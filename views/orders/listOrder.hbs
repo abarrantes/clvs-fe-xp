@@ -1,0 +1,29 @@
+
+<h3>
+<a href="/orders/create">CREATE NEW ORDER</a>
+</h3>
+
+<div class="row">
+
+<div class="col-md-2"></div>
+<div class="col-md-2">Order Number</div>
+<div class="col-md-2">Customer code</div>
+<div class="col-md-2">Customer name</div>
+<div class="col-md-2">Total</div>
+<div class="col-md-2"></div>
+
+</div>
+<hr>
+
+{{#each orders}}
+<div class="row">
+    <hr>
+<div class="col-md-2"></div>
+<div class="col-md-2">{{this.orderNumber}}</div>
+<div class="col-md-2">{{this.cardCode}}</div>
+<div class="col-md-2">{{this.cardName}}</div>
+<div class="col-md-2">{{this.total}}</div>
+<div class="col-md-2"></div>
+<hr>
+</div>
+{{/each}}
