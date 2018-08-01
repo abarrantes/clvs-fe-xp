@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 const companySchema = new Schema(
   {
    // nombre: {type: String, maxlength: 20, required: true, unique: true},
+    status: Boolean,
     nombre: String,
     identificacion:{
-       tipo: String,
+       tipo: {type:String,required:true},
        numero: Number,
     },
     nombreComercial: String,

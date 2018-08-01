@@ -109,8 +109,8 @@ app.use(passport.session());
 
 
 //Routes
-const index = require('./routes/index');
-app.use('/', index);
+// const index = require('./routes/index');
+// app.use('/', index);
 
 const orderRoutes = require('./routes/orders');
 app.use('/', orderRoutes);
@@ -124,8 +124,11 @@ app.use('/', apiRoutes);
 const customerRoutes = require('./routes/customers');
 app.use('/', customerRoutes);
 
+const companyRoutes = require('./routes/companies');
+app.use('/api/comps', companyRoutes);
+
 const authRoutes = require('./routes/authRoutes');
-app.use('api/authRoutes/', userRoutes);
+app.use('/api/auth', authRoutes);
 
 
 module.exports = app;
