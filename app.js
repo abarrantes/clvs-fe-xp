@@ -109,20 +109,9 @@ app.use(passport.session());
 
 
 //Routes
-// const index = require('./routes/index');
-// app.use('/', index);
-
-const orderRoutes = require('./routes/orders');
-app.use('/', orderRoutes);
-
-const itemRoutes = require('./routes/items');
-app.use('/', itemRoutes);
-
-const apiRoutes = require('./routes/api');
-app.use('/', apiRoutes);
 
 const customerRoutes = require('./routes/customers');
-app.use('/', customerRoutes);
+app.use('/api/cust', customerRoutes);
 
 const companyRoutes = require('./routes/companies');
 app.use('/api/comps', companyRoutes);

@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const customerSchema = new Schema(
   {
    // nombre: {type: String, maxlength: 20, required: true, unique: true},
-    status: Boolean,
+   ownerComp: {type:Schema.Types.ObjectId, required:true}, 
+   status: Boolean,
     nombre: String,
     identificacion:{
        tipo: {type:String,required:true},

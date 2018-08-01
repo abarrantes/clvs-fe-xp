@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const itemSchema = new Schema(
   {
+    ownerComp: {type:Schema.Types.ObjectId, required:true}, 
+    status: {type: Boolean, required: true, default: true},
     itemCode: {type: String, maxlength: 20, required: true, unique: true},
     itemName: {type: String, required: true},
-    active: {type: Boolean, required: true, default: true}
   },
   {
     timestamps: true,
