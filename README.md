@@ -1,2 +1,2 @@
-# clvs-invoice
-Web application for creating customers, productos, and invoices
+# clvs-fe-xp
+back end api for invoicing app

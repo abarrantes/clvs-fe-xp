@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Item = require('../models/item');
 
 // it was needed because app.js is not related to this seeds.js file, we run it independently with node bin/seeds.js
-// mongoose.connect('mongodb://localhost/clvs-invoice');
+// mongoose.connect('mongodb://localhost/not-defined');
 mongoose.connect(process.env.MONGODB_URI);
 
 const items = [

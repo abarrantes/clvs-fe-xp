@@ -17,6 +17,7 @@ const LocalStrategy   = require("passport-local").Strategy;
 const bcrypt          = require("bcryptjs");
 const session         = require("express-session");
 const MongoStore      = require("connect-mongo")(session);
+
 //flash is used to communicate error when redirected to login.get from login.post
 const flash           = require("connect-flash");
 
@@ -69,7 +70,7 @@ app.use(
 
 //todo: need to figure how this works
 // default value for title local
-app.locals.title = 'clvs-invoice';
+app.locals.title = 'not defined';
 
 passport.serializeUser((user, cb) => {
   cb(null, user._id);
@@ -123,8 +124,8 @@ app.use('/', apiRoutes);
 const customerRoutes = require('./routes/customers');
 app.use('/', customerRoutes);
 
-const userRoutes = require('./routes/users');
-app.use('/', userRoutes);
+const authRoutes = require('./routes/authRoutes');
+app.use('api/authRoutes/', userRoutes);
 
 
 module.exports = app;

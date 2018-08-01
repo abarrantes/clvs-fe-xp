@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  console.log('clvs-invoice');
+  console.log('public/scripts is linked correctly');
 
 }, false);
 
