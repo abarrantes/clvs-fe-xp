@@ -1,38 +1,50 @@
-const express           = require('express');
-const customerRouter        = express.Router();
-const Customer              = require('../models/customer');
-
-//Get customers START
-customerRouter.get('/customers/list', (req, res, next) => {
-    Customer.find({})
-    .then((resultFromDB) => {
-        res.render('customers/listCustomer', {customers: resultFromDB});
-      })
-      .catch((err) => {
-        next(err);
-      });    
-  })
+const express = require('express');
+const customerRouter = express.Router();
+const Customer = require('../models/customer');
 
 
-//Create users START
-customerRouter.get('/customers/create', (req, res, next) => {
-    res.render('customers/createCustomer');
-  })
+// Create a customer
+customerRouter.post('/create', (req, res, next) => {
+  const newCustomer = new Customer(req.body);
+  newCustomer.save()
+    .then((responseFromDb) => res.status(200).json(responseFromDb))
+    .catch(err => res.status(411).json(err));
+});
 
-customerRouter.post('/customers/create', (req, res, next) => {
+// Get all customers
+customerRouter.get('/', (req, res, next) => {
+  Customer.find()
+    .then(customersFromDb => res.status(200).json(customersFromDb))
+    .catch(err => res.status(412).json(err));
+});
 
-    const newCustomer  = new Customer(req.body);
-    
-    newCustomer.save()
-    .then(() => {
-        res.redirect('/customers/list');
-      })
-      .catch((err) => {
-        next(err);
-      });
+// Get one customer
+customerRouter.get('/:id', (req, res, next) => {
+  let custId = req.params.id;
+  Customer.findById(custId)
+    .then(customerFromDb => res.status(200).json(customerFromDb))
+    .catch(err => res.status(413).json(err));
+});
 
-  }); //ends the route
+// Edit one customer
+customerRouter.put('/edit/:id', (req, res, next) => {
+  let custId = req.params.id;
+  let updatedCust = req.body;
+  Customer.findByIdAndUpdate(custId,updatedCust)
+    .then(responseFromDb => res.status(200).json({message:"editado correctamente",responseFromDb}))
+    .catch(err => res.status(414).json(err));
+});
 
-  //Create users END
+// Toggle customer status
+customerRouter.put('/changeStatus/:id', (req, res, next) => {
+  let custId = req.params.id;
+  Customer.findById(custId)
+    .then(customerFromDb =>{
+      Customer.findByIdAndUpdate(custId,{status:!customerFromDb.status})
+        .then(customerFromDb => res.status(200).json({message:"se cambio el estado correctamente",customerFromDb}))
+        .catch(err => res.status(415).json(err))
+    })
+    .catch(err => res.status(416).json(err));
+});
 
 module.exports = customerRouter;
