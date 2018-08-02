@@ -110,6 +110,9 @@ app.use(passport.session());
 
 //Routes
 
+const itemRoutes = require('./routes/items');
+app.use('/api/items', itemRoutes);
+
 const customerRoutes = require('./routes/customers');
 app.use('/api/cust', customerRoutes);
 
