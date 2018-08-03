@@ -7,38 +7,46 @@ const bcrypt = require('bcryptjs');
 // Our user model
 const User = require('../models/user');
 
+// Get all users
+authRoutes.get('/', (req, res, next) => {
+  User.find()
+    .then(usersFromDb => res.status(200).json(usersFromDb))
+    .catch(err => res.status(412).json(err));
+});
 
 //Signup
 authRoutes.post('/signup', (req, res, next) => {
    const username = req.body.username;
    const password = req.body.password;
 
+   console.log("inside signup route==============",req.body) //borrar
+   
    if (!username || !password) {
-      res.status(400).json({
-         message: 'Provide username and password'
+     res.status(400).json({
+       message: 'Provide username and password'
       });
       return;
-   }
-
-   User.findOne({
+    }
+    
+    User.findOne({
       username
-   }, '_id', (err, foundUser) => {
+    }, '_id', (err, foundUser) => {
       if (foundUser) {
-         res.status(400).json({
+        res.status(400).json({
             message: 'The username already exists'
-         });
-         return;
-      }
-
-      const salt = bcrypt.genSaltSync(10);
-      const hashPass = bcrypt.hashSync(password, salt);
-
-      const theUser = new User({
-         username,
-         password: hashPass
-      });
-
-      theUser.save((err) => {
+          });
+          return;
+        }
+        
+        const salt = bcrypt.genSaltSync(10);
+        const hashPass = bcrypt.hashSync(password, salt);
+        
+        const theUser = new User({
+          username,
+          password: hashPass
+        });
+        
+        theUser.save((err) => {
          if (err) {
             res.status(400).json({
                message: 'Something went wrong'
@@ -62,6 +70,9 @@ authRoutes.post('/signup', (req, res, next) => {
 
 // Login
 authRoutes.post('/login', (req, res, next) => {
+
+  console.log("===================reached login route", req.body)
+
    passport.authenticate('local', (err, theUser, failureDetails) => {
       if (err) {
          res.status(500).json({
@@ -114,5 +125,17 @@ authRoutes.post('/logout', (req, res, next) => {
  
 //    res.status(403).json({ message: 'Unauthorized' });
 //  });
+
+// Toggle user status
+authRoutes.put('/changeStatus/:id', (req, res, next) => {
+  let userId = req.params.id;
+  User.findById(userId)
+    .then(userFromDb =>{
+      User.findByIdAndUpdate(userId,{status:!userFromDb.status})
+        .then(userFromDb => res.status(200).json({message:"se cambio el estado correctamente",userFromDb}))
+        .catch(err => res.status(415).json(err))
+    })
+    .catch(err => res.status(416).json(err));
+});
 
 module.exports = authRoutes;

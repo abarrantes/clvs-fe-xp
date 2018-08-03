@@ -6,6 +6,7 @@ const Company = require('../models/company');
 // Create a company
 companyRouter.post('/create', (req, res, next) => {
   const newCompany = new Company(req.body);
+  console.log("========================inside create company",req.body)
   newCompany.save()
     .then((responseFromDb) => res.status(200).json(responseFromDb))
     .catch(err => res.status(411).json(err));

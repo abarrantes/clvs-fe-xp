@@ -8,6 +8,7 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const cors         = require('cors');
 
 // needed for serializing and deserializing passwords
 const passport        = require("passport");
@@ -107,6 +108,10 @@ passport.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:4200']
+}))
 
 //Routes
 
