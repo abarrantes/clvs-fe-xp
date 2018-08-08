@@ -19,10 +19,6 @@ authRoutes.post('/signup', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  console.log("inside signup route==============", req.body) //borrar
-  console.log("inside signup route==============", username) //borrar
-  console.log("inside signup route==============", password) //borrar
-
   if (!username || !password) {
     res.status(400).json({
       message: 'Provide username and password'

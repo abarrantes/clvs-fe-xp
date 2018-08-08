@@ -127,5 +127,9 @@ app.use('/api/comps', companyRoutes);
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
+app.use((req, res, next)=> {
+  res.sendfile(__dirname + '/public/index.html')
+})
+
 
 module.exports = app;
