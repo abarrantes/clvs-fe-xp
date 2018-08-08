@@ -20,6 +20,8 @@ authRoutes.post('/signup', (req, res, next) => {
   const password = req.body.password;
 
   console.log("inside signup route==============", req.body) //borrar
+  console.log("inside signup route==============", username) //borrar
+  console.log("inside signup route==============", password) //borrar
 
   if (!username || !password) {
     res.status(400).json({
@@ -49,7 +51,8 @@ authRoutes.post('/signup', (req, res, next) => {
     theUser.save((err) => {
       if (err) {
         res.status(400).json({
-          message: 'Something went wrong'
+          message: 'Something went wrong on signup',
+          error: err
         });
         return;
       }
@@ -57,7 +60,7 @@ authRoutes.post('/signup', (req, res, next) => {
       req.login(theUser, (err) => {
         if (err) {
           res.status(500).json({
-            message: 'Something went wrong'
+            message: 'Something went wrong on login'
           });
           return;
         }
