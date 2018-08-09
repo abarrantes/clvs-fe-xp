@@ -14,7 +14,7 @@ authRoutes.get('/', (req, res, next) => {
     .catch(err => res.status(412).json(err));
 });
 
-//Signup
+// Signup
 authRoutes.post('/signup', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -148,8 +148,10 @@ authRoutes.put('/addCompany/:id', (req, res, next) => {
 
 
 authRoutes.put('/selectCompany/:id', (req, res, next) => {
+  console.log("reached select company route")
   let userId = req.params.id;
   let compId = req.body.compId;
+  console.log(compId);
   User.findById(userId)
     .then(userFromDb => {
       console.log(compId)
