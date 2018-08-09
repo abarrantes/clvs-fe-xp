@@ -5,7 +5,7 @@ const companySchema = new Schema({
 
   status: { type: Boolean, default: true },
   nombre: String,
-  identificacion: Number
+  identificacion: { type: String, required:true}
 }, {
     timestamps: true,
   });

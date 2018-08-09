@@ -115,6 +115,9 @@ app.use(cors({
 
 //Routes
 
+const invoiceRoutes = require('./routes/invoices');
+app.use('/api/invoices', invoiceRoutes);
+
 const itemRoutes = require('./routes/items');
 app.use('/api/items', itemRoutes);
 

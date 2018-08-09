@@ -135,7 +135,7 @@ authRoutes.put('/addCompany/:id', (req, res, next) => {
   let compId = req.body.compId;
   User.findById(userId)
     .then(userFromDb => {
-      console.log(compId) // tengo que arreglar que no deje agregar nulos
+      console.log("=========compid" ,compId) // tengo que arreglar que no deje agregar nulos
       if (userFromDb.comps.indexOf(compId) === -1 && compId !== null && compId !== 'undefined') {
         userFromDb.comps.push(compId)
       };
@@ -151,7 +151,7 @@ authRoutes.put('/selectCompany/:id', (req, res, next) => {
   console.log("reached select company route")
   let userId = req.params.id;
   let compId = req.body.compId;
-  console.log(compId);
+  console.log(userId);
   User.findById(userId)
     .then(userFromDb => {
       console.log(compId)

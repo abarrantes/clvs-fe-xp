@@ -6,6 +6,8 @@ const Item = require('../models/item');
 // Create a item
 itemRouter.post('/create', (req, res, next) => {
   const newItem = new Item(req.body);
+  const theCompany = req.user.activeComp;
+  newItem.ownerComp = theCompany;
   newItem.save()
     .then((responseFromDb) => res.status(200).json(responseFromDb))
     .catch(err => res.status(411).json(err));

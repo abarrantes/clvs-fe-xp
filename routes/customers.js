@@ -6,14 +6,17 @@ const Customer = require('../models/customer');
 // Create a customer
 customerRouter.post('/create', (req, res, next) => {
   const newCustomer = new Customer(req.body);
+  const theCompany = req.user.activeComp;
+  newCustomer.ownerComp = theCompany;
   newCustomer.save()
     .then((responseFromDb) => res.status(200).json(responseFromDb))
     .catch(err => res.status(411).json(err));
 });
 
 // Get all customers
-customerRouter.get('/', (req, res, next) => {
-  Customer.find()
+customerRouter.get('/:id', (req, res, next) => {
+  activeComp = req.params.id;
+  Customer.find({ownerComp:activeComp})
     .then(customersFromDb => res.status(200).json(customersFromDb))
     .catch(err => res.status(412).json(err));
 });
