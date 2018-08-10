@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 
 // Our user model
 const User = require('../models/user');
+const Company = require('../models/company'); //to get the name
 
 // Get all users
 authRoutes.get('/', (req, res, next) => {
@@ -70,7 +71,7 @@ authRoutes.post('/signup', (req, res, next) => {
 // Login
 authRoutes.post('/login', (req, res, next) => {
 
-  console.log("===================reached login route", req.body)
+  console.log("=================== reached login route", req.body)
 
   passport.authenticate('local', (err, theUser, failureDetails) => {
     if (err) {
@@ -109,6 +110,7 @@ authRoutes.post('/logout', (req, res, next) => {
 
 // Check in loggedin
 authRoutes.get('/loggedin', (req, res, next) => {
+  
   if (req.isAuthenticated()) {
     res.status(200).json(req.user);
     return;
@@ -135,7 +137,7 @@ authRoutes.put('/addCompany/:id', (req, res, next) => {
   let compId = req.body.compId;
   User.findById(userId)
     .then(userFromDb => {
-      console.log("=========compid" ,compId) // tengo que arreglar que no deje agregar nulos
+      console.log("=========compid", compId) // tengo que arreglar que no deje agregar nulos
       if (userFromDb.comps.indexOf(compId) === -1 && compId !== null && compId !== 'undefined') {
         userFromDb.comps.push(compId)
       };
@@ -147,21 +149,33 @@ authRoutes.put('/addCompany/:id', (req, res, next) => {
 });
 
 
-authRoutes.put('/selectCompany/:id', (req, res, next) => {
+authRoutes.put('/selectCompany', (req, res, next) => {
   console.log("reached select company route")
-  let userId = req.params.id;
+  let userId = req.user._id;
   let compId = req.body.compId;
-  console.log(userId);
-  User.findById(userId)
-    .then(userFromDb => {
-      console.log(compId)
-      if (userFromDb.comps.indexOf(compId) > -1) { userFromDb.activeComp = compId };
-      User.findByIdAndUpdate(userId, userFromDb)
-        .then(userFromDb => res.status(200).json({ message: "se selecciono la compania correctamente", userFromDb }))
-        .catch(err => res.status(415).json(err))
-    })
+  console.log("==========: userId", userId);
+  User.findByIdAndUpdate(userId, { activeComp: compId })
+    .then(userFromDb => res.status(200).json({ message: "se selecciono la compania correctamente", userFromDb }))
     .catch(err => res.status(416).json(err));
 });
+
+// Esta es la que queria hacer para validar que la compania estuviera asignada, por tiempo no voy a poder y la estoy simplificando con la de arriba
+// authRoutes.put('/selectCompany', (req, res, next) => {
+//   console.log("reached select company route")
+//   let userId = req.user._id;
+//   let compId = req.body.compId;
+//   console.log("==========: userId",userId);
+//   User.findById(userId)
+//     .then(userFromDb => {
+//       console.log("============: compId",compId)
+//       if (userFromDb.comps.indexOf(compId) > -1) { userFromDb.activeComp = compId };
+//       User.findByIdAndUpdate(userId, userFromDb)
+//         .then(userFromDb => res.status(200).json({ message: "se selecciono la compania correctamente", userFromDb }))
+//         .catch(err => res.status(415).json(err))
+//     })
+//     .catch(err => res.status(416).json(err));
+// });
+
 
 
 module.exports = authRoutes;
