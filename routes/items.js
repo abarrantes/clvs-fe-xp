@@ -15,7 +15,8 @@ itemRouter.post('/create', (req, res, next) => {
 
 // Get all items
 itemRouter.get('/', (req, res, next) => {
-  Item.find()
+  activeComp = req.user.activeComp;
+  Item.find({ownerComp:activeComp})
     .then(itemsFromDb => res.status(200).json(itemsFromDb))
     .catch(err => res.status(412).json(err));
 });

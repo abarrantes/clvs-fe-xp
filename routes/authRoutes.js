@@ -176,6 +176,4 @@ authRoutes.put('/selectCompany', (req, res, next) => {
 //     .catch(err => res.status(416).json(err));
 // });
 
-
-
 module.exports = authRoutes;
